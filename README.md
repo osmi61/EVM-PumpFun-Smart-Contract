@@ -1,53 +1,127 @@
-# Telegram Solana Trading Bot
-Solana Trading Bot running on Telegram
+# PumpFactory - Decentralized Token Launch Platform
 
-## Overview
-The Solana Trading Bot is an advanced and automated cryptocurrency trading tool designed for Solana-based decentralized exchanges (DEXs). It offers seamless token management and trading capabilities with cutting-edge features such as sniping, limit orders, portfolio tracking, and more. This bot is optimized for speed, accuracy, and scalability.
+A decentralized platform for launching and trading pump tokens with automated liquidity migration to Uniswap.
 
 ## Features
-1. Sniping Features
-- Automatically monitor and execute trades on newly listed tokens for early entry.
-2. Multi-DEX Trading
-- Buy and sell tokens across multiple decentralized exchanges on Solana, ensuring liquidity optimization.
-3. Limit Orders
-- Set custom buy/sell price limits to automate trades at your desired levels.
-4. Wallet Portfolio Management
-- Track the portfolio of tokens in your wallet with real-time updates.
-5. Referral System
-- Incentivize users with a built-in referral system for enhanced user engagement.
-6. Token Watchlist
-- Create and maintain a watchlist of tokens to monitor price changes and market activity.
 
-## Installation
-1. clone the repository onto ubuntu 20.04
-2. install python 3.10
-3. install the dependencies into venv via `cd solbot && make dev`
-4. run the bot in dev mode do `make run` inside project root directory
-5. to deploy the bot in background do `make solbot`
-6. to kill running bot do `make kill`
+- **Token Launch**: Create new pump tokens with custom names and symbols
+- **Automated Trading**: Buy and sell tokens directly through the factory
+- **Liquidity Migration**: Automatic migration to Uniswap when conditions are met
+- **Fee Collection**: Configurable trading fees
+- **Public Interface**: Clean API for external integration
 
-## systemd commands
-- check status `systemctl status dogbot.service`
+## Architecture
 
-- start service `sudo systemctl start service.service`
+The codebase is organized with a clear separation between public interfaces and internal implementation:
 
-- stop service `sudo systemctl stop service.service`
+### Public Components
+- `IPumpFactory.sol` - Public interface for external contracts
+- `PumpFactoryClient.ts` - TypeScript client library
+- `examples/` - Usage examples and documentation
 
-- restart service `sudo systemctl stop service.service`
+### Internal Components
+- `PumpFactory.sol` - Main factory implementation
+- `PumpToken.sol` - ERC20 token implementation
+- `interfaces/` - External contract interfaces
 
-Here are the commands to check the logs
+## Quick Start
 
-- check the logs `journalctl -u dogbot.service -e`
+### 1. Install Dependencies
+```bash
+npm install
+```
 
-- follow logs in real time `journalctl -u dogbot.service -f`
+### 2. Deploy Contracts
+```bash
+npx hardhat compile
+npx hardhat run scripts/deployPump.ts --network <your-network>
+```
 
-- check specific after time `journalctl -u dogbot.service --since "2024-11-18 17:15:00"`
+### 3. Use the Client Library
+```typescript
+import { PumpFactoryClient } from './lib/PumpFactoryClient';
 
-- check time range  `journalctl -u dogbot.service --since "2024-11-18 17:15:00" --until "2024-11-18 18:00:00"`
+const client = new PumpFactoryClient(factoryAddress, signer);
 
-- list boots `journalctl -u dogbot.service --list-boots`
+// Launch a new token
+await client.launchToken('MyToken', 'MTK', '0.1');
 
-- check previous boot logs `journalctl -b -1`
+// Buy tokens
+await client.buyToken(tokenAddress, '0.05');
 
-## Author
-[AnotherRusty](https://t.me/idioRusty)
+// Sell tokens
+await client.sellToken(tokenAddress, '1000');
+```
+
+## API Reference
+
+### PumpFactoryClient
+
+#### `launchToken(name: string, symbol: string, initialEth?: string)`
+Launches a new pump token with optional initial ETH purchase.
+
+#### `buyToken(tokenAddress: string, ethAmount: string)`
+Buys tokens from the pump using ETH.
+
+#### `sellToken(tokenAddress: string, tokenAmount: string)`
+Sells tokens back to the pump for ETH.
+
+#### `getTokenInfo(tokenAddress: string)`
+Retrieves token information including reserves and migration status.
+
+#### `getFactoryConfig()`
+Gets factory configuration including fees and reserves.
+
+## Contract Interfaces
+
+### IPumpFactory
+Public interface exposing core functionality:
+- `launchToken()` - Launch new tokens
+- `buyToken()` - Purchase tokens
+- `sellToken()` - Sell tokens
+- `tokens()` - Get token info
+- `getFactoryConfig()` - Get factory settings
+
+## Development
+
+### Compile Contracts
+```bash
+npx hardhat compile
+```
+
+### Run Tests
+```bash
+npx hardhat test
+```
+
+### Deploy to Network
+```bash
+npx hardhat run scripts/deployPump.ts --network <network-name>
+```
+
+## Security
+
+- All external functions use `nonReentrant` modifier
+- Owner-only functions for configuration updates
+- Proper access controls on token minting
+- Safe math operations (Solidity 0.8.28)
+
+## License
+
+MIT License - see LICENSE file for details.
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## Support
+
+For questions or issues, please open an issue on GitHub.
+
+## Help
+
+If you need any help for your EVM pumpfun smart contract, please hit [AnotherRusty](https://t.me/idioRusty) up any time
