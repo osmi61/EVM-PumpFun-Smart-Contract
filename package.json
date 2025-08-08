@@ -18,7 +18,7 @@
     "liquidity",
     "pump"
   ],
-  "author": "Your Name",
+  "author": "Kei",
   "license": "MIT",
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
