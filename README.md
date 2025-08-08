@@ -122,6 +122,6 @@ MIT License - see LICENSE file for details.
 
 For questions or issues, please open an issue on GitHub.
 
-## Help
-
-If you need any help for your EVM pumpfun smart contract, please hit [AnotherRusty](https://t.me/idioRusty) up any time
+### 👤 Author
+#### Twitter: [@KEI_NOVAK](https://x.com/kei_4650)   
+#### Telegram: [@KEI_NOVAK](https://t.me/Kei4650)  
