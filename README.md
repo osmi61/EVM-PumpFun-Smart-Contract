@@ -121,7 +121,3 @@ MIT License - see LICENSE file for details.
 ## Support
 
 For questions or issues, please open an issue on GitHub.
-
-### 👤 Author
-#### Twitter: [@KEI_NOVAK](https://x.com/kei_4650)   
-#### Telegram: [@KEI_NOVAK](https://t.me/Kei4650)  
